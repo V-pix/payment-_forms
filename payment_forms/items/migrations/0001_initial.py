@@ -7,17 +7,46 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Item',
+            name="Item",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(help_text='Укажите название товара', max_length=200, verbose_name='Название товара')),
-                ('description', models.TextField(help_text='Введите текстовое описание', verbose_name='Текстовое описание')),
-                ('price', models.DecimalField(decimal_places=2, default=0, help_text='Укажите цену товара', max_digits=10, verbose_name='Цена товара')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(
+                        help_text="Укажите название товара",
+                        max_length=200,
+                        verbose_name="Название товара",
+                    ),
+                ),
+                (
+                    "description",
+                    models.TextField(
+                        help_text="Введите текстовое описание",
+                        verbose_name="Текстовое описание",
+                    ),
+                ),
+                (
+                    "price",
+                    models.DecimalField(
+                        decimal_places=2,
+                        default=0,
+                        help_text="Укажите цену товара",
+                        max_digits=10,
+                        verbose_name="Цена товара",
+                    ),
+                ),
             ],
         ),
     ]
