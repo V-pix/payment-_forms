@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  Your shopping cart
+{% endblock %}
+
+{% block content %}
+  <h1>Your shopping cart</h1>
+  <table class="cart">
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Quantity</th>
+        <th>Remove</th>
+        <th>Unit price</th>
+        <th>Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for cart_item in cart %}
+        {% with item=cart_item.item %}
+          <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ cart_item.quantity }}</td>
+            <td>
+              <form action="{% url "cart:cart_remove" item.id %}"
+method="post">
+                <input type="submit" value="Remove">
+                {% csrf_token %}
+              </form>
+            </td>
+            <td class="num">${{ cart_item.price }}</td>
+            <td class="num">${{ cart_item.total_price }}</td>
+          </tr>
+        {% endwith %}
+      {% endfor %}
+      <tr class="total">
+        <td>Total</td>
+        <td colspan="4"></td>
+        <td class="num">${{ cart.get_total_price }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="text-right">
+    <a href="{% url "items:item_list" %}" class="button
+    light">Continue shopping</a>
+    <a href="{% url "orders:order_create" %}" class="button">Buy</a>
+  </p>
+{% endblock %}

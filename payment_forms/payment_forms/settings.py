@@ -19,6 +19,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "items.apps.ItemsConfig",
+    "orders.apps.OrdersConfig",
+    "cart.apps.CartConfig",
 ]
 
 MIDDLEWARE = [
@@ -94,4 +96,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 STRIPE_PUBLIC_KEY = "pk_test_51M6EjiIlMRwnUYcCYBUcDmhf97EAxVFu0lcGvEXsLux3vBislfoqR3NLL2gYcd4r824RGtgM3TucRYhrPUnKPEhR00iB1bbcJ9"
 # STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY", default="pk_test_1234")
-STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY", default="sk_test_1234")
+# STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY", default="sk_test_1234")
+STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
+
+# STRIPE_SECRET_KEY = 'sk_test_51M6EjiIlMRwnUYcCexRUQryA3JCMsKuqcWxlt4js4I7JiJbAzG79cZizDWzyBnawgqilsly9FT7KFnGAz5PcLFZs00uiwGfOD9'
+
+CART_SESSION_ID = "cart"

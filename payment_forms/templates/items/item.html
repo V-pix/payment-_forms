@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% extends "base.html" %}
 <html>
   <head>
     <meta charset="utf-8">
@@ -26,7 +27,7 @@
     var stripe = Stripe("{{ STRIPE_PUBLIC_KEY }}");
     var buyButton = document.getElementById("buy-button");
     buyButton.addEventListener("click", function () {
-    fetch("{% url 'buy' item.id %}", {
+    fetch("{% url 'items:buy' item.id %}", {
         method: "GET",
         headers: {
             'X-CSRFToken': csrftoken

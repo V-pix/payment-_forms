@@ -1,23 +1,26 @@
 import os
 
 import stripe
-from django.conf import settings
+from django.core.handlers.wsgi import WSGIRequest
 from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.base import TemplateView
+from dotenv import find_dotenv, load_dotenv
+
+from cart.forms import CartAddProductForm
 
 from .models import Item
 
+load_dotenv(find_dotenv())
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 
 
 @csrf_exempt
 def create_checkout_session(request, pk):
     if request.method == "GET":
-        domain_url = "http://localhost:8000/"
-        # stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
-        stripe.api_key = "sk_test_51M6EjiIlMRwnUYcCexRUQryA3JCMsKuqcWxlt4js4I7JiJbAzG79cZizDWzyBnawgqilsly9FT7KFnGAz5PcLFZs00uiwGfOD9"
+        domain_url = os.getenv("DOMAIN_URL")
         item = Item.objects.get(id=pk)
         try:
             checkout_session = stripe.checkout.Session.create(
@@ -33,7 +36,7 @@ def create_checkout_session(request, pk):
                             "product_data": {
                                 "name": item.name,
                             },
-                            "unit_amount": 200,
+                            "unit_amount": 300,
                         },
                         "quantity": 1,
                     },
@@ -54,7 +57,7 @@ class BuyItemView(TemplateView):
         context.update(
             {
                 "item": item,
-                "STRIPE_PUBLIC_KEY": "pk_test_51M6EjiIlMRwnUYcCYBUcDmhf97EAxVFu0lcGvEXsLux3vBislfoqR3NLL2gYcd4r824RGtgM3TucRYhrPUnKPEhR00iB1bbcJ9",
+                "STRIPE_PUBLIC_KEY": os.getenv("STRIPE_PUBLIC_KEY"),
             }
         )
         return context
@@ -66,3 +69,19 @@ class SuccessView(TemplateView):
 
 class CancelView(TemplateView):
     template_name = "items/cancel.html"
+
+
+def item_list(request):
+    item = Item.objects.all()
+    return render(request, "items/item_list.html", {"item": item})
+
+
+def item_detail(request, pk):
+    item = get_object_or_404(Item, id=pk)
+    cart_product_form = CartAddProductForm()
+    return render(
+        request,
+        "items/item_detail.html",
+        # "cart/detail.html",
+        {"item": item, "cart_product_form": cart_product_form},
+    )

@@ -21,13 +21,3 @@ class Item(models.Model):
 
     def __str__(self):
         return self.name
-
-
-class Order(models.Model):
-    items = models.ForeignKey(
-        Item,
-        on_delete=models.CASCADE,
-        related_name="order",
-    )
-    quantity = models.PositiveIntegerField(default=1, blank=False)
-    # total_price = models.DecimalField(default=0.00, max_digits=50, decimal_places=2)
