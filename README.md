@@ -36,7 +36,7 @@ git clone git@github.com:V-pix/payment_forms.git
 ```bash
 cd payment_forms
 ```
-### Установить `docker` и `docker-compose`:
+### Установить `docker` и `docker-compose`, если они не установлены:
 ```bash
 https://docs.docker.com/get-docker/
 ```
