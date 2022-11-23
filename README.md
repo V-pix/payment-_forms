@@ -48,7 +48,7 @@ https://docs.docker.com/compose/
 docker build -t payment_forms .
 ```
 ```bash
-docker-compose up
+docker-compose up -d
 ```
 ### Выполните миграции:
 ```bash
@@ -56,13 +56,17 @@ docker-compose exec web python manage.py migrate
 ```
 ### Заполните тестовые данные:
 ```bash
-docker-compose exec web python manage.py loaddata data.json
+docker-compose exec web python manage.py loaddata dump.json
 ```
 
 ### Теперь проект доступен по адресам:
 http://localhost:8000/ 
 
 http://localhost:8000/admin/
+
+http://localhost:8000/item/1/
+
+http://localhost:8000/buy/1/
 
 ### Учетная запись администратора
 ```sh

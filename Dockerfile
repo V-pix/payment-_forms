@@ -8,6 +8,8 @@ RUN pip3 install --upgrade pip
 
 COPY requirements.txt .
 
+COPY dump.json .
+
 RUN pip3 install -r /app/requirements.txt --no-cache-dir
 
 COPY payment_forms/ .
