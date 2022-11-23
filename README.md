@@ -60,7 +60,8 @@ docker-compose exec web python manage.py loaddata data.json
 ```
 
 ### Теперь проект доступен по адресам:
-http://localhost:8000/
+http://localhost:8000/ 
+
 http://localhost:8000/admin/
 
 ### Учетная запись администратора
