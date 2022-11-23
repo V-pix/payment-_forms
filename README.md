@@ -58,13 +58,11 @@ docker-compose exec web python manage.py migrate
 ```bash
 docker-compose exec web python manage.py loaddata data.json
 ```
+
 ### Теперь проект доступен по адресам:
-```bash
 http://localhost:8000/
-```
-```bash
 http://localhost:8000/admin/
-```
+
 ### Учетная запись администратора
 ```sh
 login: admin
