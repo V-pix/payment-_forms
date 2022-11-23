@@ -1,7 +1,6 @@
 from decimal import Decimal
 
 from django.conf import settings
-
 from items.models import Item
 
 
@@ -13,17 +12,15 @@ class Cart:
         self.session = request.session
         cart = self.session.get(settings.CART_SESSION_ID)
         if not cart:
-            # save an empty cart in the session
             cart = self.session[settings.CART_SESSION_ID] = {}
         self.cart = cart
 
     def __iter__(self):
         """
-        Iterate over the items in the cart and get the products
+        Iterate over the items in the cart and get the items
         from the database.
         """
         item_ids = self.cart.keys()
-        # get the product objects and add them to the cart
         items = Item.objects.filter(id__in=item_ids)
         cart = self.cart.copy()
         for item in items:
@@ -41,7 +38,7 @@ class Cart:
 
     def add(self, item, quantity=1, override_quantity=False):
         """
-        Add a product to the cart or update its quantity.
+        Add a item to the cart or update its quantity.
         """
         item_id = str(item.id)
         if item_id not in self.cart:
@@ -53,12 +50,11 @@ class Cart:
         self.save()
 
     def save(self):
-        # mark the session as "modified" to make sure it gets saved
         self.session.modified = True
 
     def remove(self, item):
         """
-        Remove a product from the cart.
+        Remove a item from the cart.
         """
         item_id = str(item.id)
         if item_id in self.cart:
@@ -66,11 +62,12 @@ class Cart:
             self.save()
 
     def clear(self):
-        # remove cart from session
         del self.session[settings.CART_SESSION_ID]
         self.save()
 
     def get_total_price(self):
         return sum(
-            Decimal(item["price"]) * item["quantity"] for item in self.cart.values()
+            Decimal(
+                item["price"]
+            ) * item["quantity"] for item in self.cart.values()
         )

@@ -51,7 +51,9 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("price", models.DecimalField(decimal_places=2, max_digits=10)),
+                ("price", models.DecimalField(
+                    decimal_places=2, max_digits=10
+                )),
                 ("quantity", models.PositiveIntegerField(default=1)),
                 (
                     "order",

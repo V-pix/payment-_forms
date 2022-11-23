@@ -1,15 +1,12 @@
 import os
 
 import stripe
-from django.core.handlers.wsgi import WSGIRequest
+from cart.forms import CartAddProductForm
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404, redirect, render
-from django.views import View
+from django.shortcuts import get_object_or_404, render
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.base import TemplateView
 from dotenv import find_dotenv, load_dotenv
-
-from cart.forms import CartAddProductForm
 
 from .models import Item
 
@@ -18,7 +15,7 @@ stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 
 
 @csrf_exempt
-def create_checkout_session(request, pk):
+def create_checkout_session(request, pk: int):
     if request.method == "GET":
         domain_url = os.getenv("DOMAIN_URL")
         item = Item.objects.get(id=pk)
@@ -52,6 +49,7 @@ class BuyItemView(TemplateView):
 
     def get_context_data(self, **kwargs):
         item_id = self.kwargs["pk"]
+        print(item_id)
         item = Item.objects.get(id=item_id)
         context = super(BuyItemView, self).get_context_data(**kwargs)
         context.update(
@@ -76,12 +74,11 @@ def item_list(request):
     return render(request, "items/item_list.html", {"item": item})
 
 
-def item_detail(request, pk):
+def item_detail(request, pk: int):
     item = get_object_or_404(Item, id=pk)
     cart_product_form = CartAddProductForm()
     return render(
         request,
         "items/item_detail.html",
-        # "cart/detail.html",
         {"item": item, "cart_product_form": cart_product_form},
     )
