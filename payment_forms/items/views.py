@@ -21,7 +21,8 @@ def create_checkout_session(request, pk: int):
         item = Item.objects.get(id=pk)
         try:
             checkout_session = stripe.checkout.Session.create(
-                success_url=domain_url + "success?session_id={CHECKOUT_SESSION_ID}",
+                success_url=(domain_url
+                             + "success?session_id={CHECKOUT_SESSION_ID}"),
                 cancel_url=domain_url + "cancelled/",
                 payment_method_types=["card"],
                 mode="payment",
