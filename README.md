@@ -39,6 +39,8 @@ cd payment_forms
 ### Установить `docker` и `docker-compose`:
 ```bash
 https://docs.docker.com/get-docker/
+```
+```bash
 https://docs.docker.com/compose/
 ```
 ### Cоберите контейнер и запустите:
@@ -59,9 +61,11 @@ docker-compose exec web python manage.py loaddata data.json
 ### Теперь проект доступен по адресам:
 ```bash
 http://localhost:8000/
+```
+```bash
 http://localhost:8000/admin/
 ```
-###Учетная запись администратора
+### Учетная запись администратора
 ```sh
 login: admin
 password: 123
